@@ -8,10 +8,10 @@
     state: present
 
 - name: enable and start
-    service:
-        name: "{{ service }}"
-        state: started
-        enabled: yes
+  service:
+    name: "{{ service }}"
+    state: started
+    enabled: yes
   loop: "{{ krb5.services | dict2items }}"
   loop_control:
     loop_var: service
