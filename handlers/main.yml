@@ -4,6 +4,6 @@
   service:
     name: "{{ service }}"
     state: restarted
-  loop: "{{ krb5.services | dict2items }}"
+  loop: "{{ krb5.services }}"
   loop_control:
     loop_var: service

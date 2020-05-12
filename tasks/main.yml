@@ -12,7 +12,7 @@
     name: "{{ service }}"
     state: started
     enabled: yes
-  loop: "{{ krb5.services | dict2items }}"
+  loop: "{{ krb5.services }}"
   loop_control:
     loop_var: service
 
