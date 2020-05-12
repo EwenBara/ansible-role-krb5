@@ -1,1 +1,7 @@
 ---
+
+krb5:
+  package: krb5
+  services:
+    - krb5-kdc
+    - krb5-kadmind

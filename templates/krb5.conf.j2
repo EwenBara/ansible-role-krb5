@@ -1,0 +1,14 @@
+#jinja2: lstrip_blocks: True
+[libdefaults]
+        default_realm    = EWEN-BARA.COM
+        clockskew        =      300
+        ticket_lifetime  =      1d
+        forwardable      =      true
+        proxiable        =      true
+        dns_lookup_realm =      true
+        dns_lookup_kdc   =      true
+
+[realms]
+    {% for key, realm in krb5.config.realms.items() %}
+    {{ key }} = {}
+    {% endfor %}
