@@ -1,7 +1,7 @@
 #jinja2: lstrip_blocks: True
 [libdefaults]
-    {% if krb5.config.libdefaults.default_realm is defined %}
-    default_realm    = {{ krb5.config.libdefaults.default_realm }}
+    {% if krb5.config.krb5.libdefaults.default_realm is defined %}
+    default_realm    = {{ krb5.config.krb5.libdefaults.default_realm }}
     {% endif %}
     clockskew        =      300
     ticket_lifetime  =      1d
@@ -11,7 +11,7 @@
     dns_lookup_kdc   =      true
 
 [realms]
-    {% for key, realm in krb5.config.realms.items() %}
+    {% for key, realm in krb5.config.krb5.realms.items() %}
     {% if realm %}
     {{ key }} = {
         {% if realm.kdc is defined %}
@@ -28,37 +28,8 @@
     {% endfor %}
 
 [domain_realms]
-    {% for domain, realm in krb5.config.domain_realms.items() %}
+    {% for domain, realm in krb5.config.krb5.domain_realms.items() %}
     {% if realm %}
     {{ domain }} = {{ realm }}
     {% endif %}
     {% endfor %}
-
-{% if krb5.config.dbmodule is defined %}
-[dbmodules]
-    {% for key, dbmodule in krb5.config.dbmodule.items() %}
-    {{ key }} = {
-        {% if dbmodule.db_library is defined %}
-        db_library = {{ dbmodule.db_library }}
-        {% endif %}
-        {% if dbmodule.ldap_kerberos_container_dn is defined %}
-        ldap_kerberos_container_dn = {{ dbmodule.ldap_kerberos_container_dn }}
-        {% endif %}
-        {% if dbmodule.ldap_kdc_dn is defined %}
-        ldap_kdc_dn = {{ dbmodule.ldap_kdc_dn }}
-        {% endif %}
-        {% if dbmodule.ldap_kadmind_dn is defined %}
-        ldap_kadmind_dn = {{ dbmodule.ldap_kadmind_dn }}
-        {% endif %}
-        {% if dbmodule.ldap_service_password_file is defined %}
-        ldap_service_password_file = {{ dbmodule.ldap_service_password_file }}
-        {% endif %}
-        {% if dbmodule.ldap_servers is defined %}
-        ldap_servers = {{ dbmodule.ldap_servers }}
-        {% endif %}
-        {% if dbmodule.ldap_conns_per_server is defined %}
-        ldap_conns_per_server = {{ dbmodule.ldap_conns_per_server }}
-        {% endif %}
-    }
-    {% endfor %}
-{% endif %}

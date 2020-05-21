@@ -1,0 +1,7 @@
+---
+
+- name: create realm {{ realm.key }}
+  command:
+    cmd: kdb5_util create -r '{{ realm.key }}' -P 'test'
+    creates: '{{ realm.value.database_name }}'
+  when: realm.value.database_module is undefined

@@ -7,14 +7,15 @@ krb5:
     - krb5-kadmind
   is_server: false
   config:
-    libdefaults:
-      default_realm: ATHENA.MIT.EDU
-    realms:
-      ATHENA.MIT.EDU:
-        admin_server: kerberos.mit.edu
-      ANDREW.CMU.EDU:
-        admin_server: kdc-01.andrew.cmu.edu
-    domain_realms:
-      mit.edu: ATHENA.MIT.EDU
-      csail.mit.edu: CSAIL.MIT.EDU
-      .ucsc.edu: CATS.UCSC.EDU
+    krb5:
+      libdefaults:
+        default_realm: ATHENA.MIT.EDU
+      realms:
+        ATHENA.MIT.EDU:
+          admin_server: kerberos.mit.edu
+        ANDREW.CMU.EDU:
+          admin_server: kdc-01.andrew.cmu.edu
+      domain_realms:
+        mit.edu: ATHENA.MIT.EDU
+        csail.mit.edu: CSAIL.MIT.EDU
+        .ucsc.edu: CATS.UCSC.EDU

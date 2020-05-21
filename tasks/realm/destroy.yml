@@ -1,0 +1,6 @@
+---
+
+- name: destroy realm {{ realm.key }}
+  command:
+    cmd: kdb5_util destroy -r '{{ realm.key }}' -f
+  when: realm.value.database_module is undefined

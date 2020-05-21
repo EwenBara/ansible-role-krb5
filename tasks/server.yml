@@ -1,0 +1,37 @@
+---
+
+- name: configure kdc
+  template:
+    src: kdc.conf.j2
+    dest: /var/lib/krb5kdc/kdc.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart krb5
+
+- name: configure kadm5.acl
+  copy:
+    content: '*/admin@{{ item.key }} *'
+    dest: '{{ item.value.acl_file }}'
+    owner: root
+    group: root
+    mode: '0644'
+  loop: '{{ krb5.config.kdc.realms | dict2items }}'
+
+- include: realm/create.yml
+  vars:
+    realm: '{{ item }}'
+  when: realm.value is defined
+  loop: '{{ krb5.config.kdc.realms | dict2items }}'
+  notify:
+    - restart krb5
+
+- name: enable and start
+  service:
+    name: '{{ service }}'
+    state: started
+    enabled: yes
+  loop: '{{ krb5.services }}'
+  loop_control:
+    loop_var: service
