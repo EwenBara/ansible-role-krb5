@@ -3,7 +3,37 @@
 
 - name: Verify
   hosts: all
+  vars:
+    krb5_conf_sha1sum: d38aad6f6f8004cef22404e7b02a33db38553f80
   tasks:
-  - name: Example assertion
+  - include_role:
+      name: ansible-role-krb5
+      tasks_from: map
+
+  - stat:
+      path: /etc/krb5.conf
+    register: krb5_conf
+
+  - service_facts:
+    register: services
+
+  - debug:
+      var: services.ansible_facts.services['krb5-kdc.service']
+
+  - name: Check stat of file
     assert:
-      that: true
+      that:
+        - krb5_conf.stat.pw_name == 'root'
+        - krb5_conf.stat.gr_name == 'root'
+        - krb5_conf.stat.mode == '0644'
+        - krb5_conf.stat.checksum == krb5_conf_sha1sum
+
+  - name: Check services state
+    assert:
+      that:
+        - services.ansible_facts.services['{{ service }}.service'].status == 'enabled'
+        - services.ansible_facts.services['{{ service }}.service'].state == 'started'
+    loop: "{{ krb5.services }}"
+    loop_control:
+      loop_var: service
+    when: krb5.is_server | bool
