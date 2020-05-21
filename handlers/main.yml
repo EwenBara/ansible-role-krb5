@@ -7,3 +7,4 @@
   loop: "{{ krb5.services }}"
   loop_control:
     loop_var: service
+  when: krb5.is_server | bool

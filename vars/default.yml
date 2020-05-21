@@ -5,6 +5,7 @@ krb5:
   services:
     - krb5-kdc
     - krb5-kadmind
+  is_server: false
   config:
     libdefaults:
       default_realm: ATHENA.MIT.EDU
