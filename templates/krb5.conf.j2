@@ -35,7 +35,7 @@
     {% endfor %}
 
 {% if krb5.config.dbmodule is defined %}
-[dbmodule]
+[dbmodules]
     {% for key, dbmodule in krb5.config.dbmodule.items() %}
     {{ key }} = {
         {% if dbmodule.db_library is defined %}
