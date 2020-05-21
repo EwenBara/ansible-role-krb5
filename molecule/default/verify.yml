@@ -17,9 +17,6 @@
   - service_facts:
     register: services
 
-  - debug:
-      var: services.ansible_facts.services['krb5-kdc.service']
-
   - name: Check stat of file
     assert:
       that:
