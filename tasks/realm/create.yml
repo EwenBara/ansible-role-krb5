@@ -5,3 +5,14 @@
     cmd: kdb5_util create -r '{{ realm.key }}' -P 'test'
     creates: '{{ realm.value.database_name }}'
   when: realm.value.database_module is undefined
+
+- block:
+  - name: check realm
+    command: "kdb5_ldap_util list"
+    register: realm_db_list
+    changed_when: false
+  - name: create realm {{ realm.key }}
+    command:
+      cmd: kdb5_ldap_util create -r '{{ realm.key }}' -P 'test'
+    when: not (realm.key in realm_db_list.stdout_lines)
+  when: realm.value.database_module is defined
