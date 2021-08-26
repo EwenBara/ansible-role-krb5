@@ -8,7 +8,7 @@
 
 - block:
   - name: check realm
-    command: "kdb5_ldap_util list"
+    command: kdb5_ldap_util list
     register: realm_db_list
     changed_when: false
   - name: create realm {{ realm.key }}
