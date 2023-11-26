@@ -1,6 +1,6 @@
 ---
 
-- include: map.yml
+- include_tasks: map.yml
 
 - name: install
   package:
@@ -15,5 +15,5 @@
     group: root
     mode: 0644
 
-- include: server.yml
+- include_tasks: server.yml
   when: krb5.is_server | bool
