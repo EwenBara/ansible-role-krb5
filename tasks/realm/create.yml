@@ -5,6 +5,8 @@
     cmd: kdb5_util create -r '{{ realm.key }}' -P 'test'
     creates: '{{ realm.value.database_name }}'
   when: realm.value.database_module is undefined
+  notify:
+    - restart krb5
 
 - block:
   - name: check realm
@@ -15,4 +17,6 @@
     command:
       cmd: kdb5_ldap_util create -r '{{ realm.key }}' -P 'test'
     when: not (realm.key in realm_db_list.stdout_lines)
+    notify:
+      - restart krb5
   when: realm.value.database_module is defined
