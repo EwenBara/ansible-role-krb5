@@ -20,7 +20,7 @@
   when: item.value.acl_file is defined
   loop: '{{ krb5.config.kdc.realms | default({}) | dict2items }}'
 
-- include: realm/create.yml
+- include_tasks: realm/create.yml
   vars:
     realm: '{{ item }}'
   when: realm.value is defined
